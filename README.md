@@ -28,7 +28,7 @@ Provision and configure a Linux-based cloud server running a Node.js application
 ### 1. **Provisioning the Server**
 - I created a new EC2 instance on AWS (Ubuntu 22.04 LTS).
 - I allowed HTTP (80), HTTPS (443), and SSH (22) in the security group.
-- Connected using EC2 Instance Connect.
+- I connected to the instance using EC2 Instance Connect.
 
 ### 2. **Initial Server Setup**
 ```bash
@@ -55,7 +55,7 @@ npm install
 npm run build
 npm start
 ```
-The app started on: `http://localhost:3000`
+After running npm start, the app was served locally on the EC2 instance at 'http://localhost:3000', and then accessed globally via Nginx at 'https://oladejo.xyz`.
 
 ### 6. **Configured Nginx as Reverse Proxy**
 Edited `/etc/nginx/sites-available/default`:
@@ -76,11 +76,13 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-### 7. **SSL Setup**
-I enabled SSL using Certbot:
+### 7. **SSL Setup (HTTPS Enabled)**
+I enabled SSL for my domain using Certbot from Let’s Encrypt. This automatically configured HTTPS and redirected all HTTP traffic to the secure version of the site.
+Certbot also set up automatic certificate renewal:
 ```bash
+sudo apt update
 sudo apt install certbot python3-certbot-nginx -y
-sudo certbot --nginx -d yourdomain.com
+sudo certbot --nginx -d oladejo.xyz -d www.oladejo.xyz
 ```
 
 ---
@@ -92,9 +94,14 @@ sudo certbot --nginx -d yourdomain.com
 
 ---
 
-## 🖼️ Screenshot
+## 🖼️ Screenshots
+Below are previews of the deployed landing page:
 
-![Screenshot of the deployed landing page](screenshot.png)
+### ✅ Hero section View
+![Main Landing Page](screenshots/hero-section.png)
+
+### 📱 Full View
+![Responsive View](screenshots/fullpage.png)
 
 ---
 
@@ -106,7 +113,7 @@ sudo certbot --nginx -d yourdomain.com
 ├── public/
 ├── styles/
 ├── package.json
-├── README.md
+├── README.md ← (project documentation – this file)
 └── ...
 ```
 
@@ -115,5 +122,5 @@ sudo certbot --nginx -d yourdomain.com
 ## ✍️ Author
 
 **David Oladejo**  
-Cloud Engineering Student, AltSchool Africa Tinyuka 2024  
+Cloud Engineering Student & President of School of Engineering, AltSchool Africa Tinyuka 2024  
 GitHub: [@davidollad](https://github.com/davidollad)
